@@ -1,0 +1,81 @@
+{
+   "datasource": "myworld",
+   "name": "adres",
+   "external_name": "Adres",
+   "title": "{display_name}: [id]",
+   "short_description": null,
+   "track_changes": true,
+   "versioned": false,
+   "geom_indexed": true,
+   "editable": false,
+   "fields": [
+      {
+         "name": "id",
+         "external_name": "Id",
+         "type": "string(100)",
+         "key": true
+      },
+      {
+         "name": "huisnummer",
+         "external_name": "Huisnummer",
+         "type": "integer",
+         "range": [
+            0.0,
+            4294967295.0
+         ],
+         "mandatory": "true"
+      },
+      {
+         "name": "toevoeging",
+         "external_name": "Toevoeging",
+         "type": "string(25)"
+      },
+      {
+         "name": "postcode",
+         "external_name": "Postcode",
+         "type": "string(6)",
+         "mandatory": "true"
+      },
+      {
+         "name": "herkomst",
+         "external_name": "Herkomst",
+         "type": "string(1)"
+      },
+      {
+         "name": "straat",
+         "external_name": "Straat",
+         "type": "reference"
+      },
+      {
+         "name": "myw_geometry_world_name",
+         "external_name": "myw_geometry_world_name",
+         "type": "string(100)"
+      },
+      {
+         "name": "myw_orientation_the_geom",
+         "external_name": "Geometry Orientation: the_geom",
+         "type": "double"
+      },
+      {
+         "name": "the_geom",
+         "external_name": "Locatie",
+         "type": "point",
+         "mandatory": "true"
+      }
+   ],
+   "groups": [],
+   "searches": [],
+   "queries": [
+      {
+         "value": "adres",
+         "description": "Adres",
+         "lang": "en"
+      },
+      {
+         "value": "adres",
+         "description": "Adres",
+         "lang": "nl"
+      }
+   ],
+   "filters": []
+}
