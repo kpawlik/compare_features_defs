@@ -111,9 +111,12 @@ func compareBothWay(dir1, dir2 string, displayNonExists bool) {
 		if entry1.IsDir() {
 			continue
 		}
-		name := entry1.Name()
-		filepath1 := filepath.Join(dir1, name)
-		filepath2 := filepath.Join(dir2, name)
+		fileName := entry1.Name()
+		if !strings.HasSuffix(fileName, ".def") {
+			continue
+		}
+		filepath1 := filepath.Join(dir1, fileName)
+		filepath2 := filepath.Join(dir2, fileName)
 		bytes, err = os.ReadFile(filepath1)
 		handleErr(err)
 		handleErr(json.Unmarshal(bytes, &feature1))
@@ -126,9 +129,7 @@ func compareBothWay(dir1, dir2 string, displayNonExists bool) {
 		}
 		handleErr(err)
 		handleErr(json.Unmarshal(bytes, &feature2))
-		fields1 := feature1["fields"]
-		fields2 := feature2["fields"]
-		res := compareFieldsBothWay(fields1, fields2, name)
+		res := compareFieldsBothWay(feature1, feature2)
 		if len(res) > 0 {
 			csvExportBothWay(exporter, res)
 			exporter.WriteSeparator()
@@ -156,12 +157,14 @@ func getFieldDef(fields []any, fieldName string) map[string]any {
 	return nil
 }
 
-func compareFieldsBothWay(fields1 any, fields2 any, featureName string) (results []*ResultBothWay) {
+func compareFieldsBothWay(feature1 FeatureDef, feature2 FeatureDef) (results []*ResultBothWay) {
 	allFields := map[string]*ResultBothWay{}
-
+	fields1 := feature1["fields"]
+	fields2 := feature2["fields"]
 	mFields1, _ := fields1.([]any)
 	mFields2, _ := fields2.([]any)
 	fields := fieldNames(mFields1)
+	featureName := feature1["name"].(string)
 	fields = append(fields, fieldNames(mFields2)...)
 
 	for _, fieldName := range fields {
